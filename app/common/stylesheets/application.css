@@ -21,3 +21,11 @@ h4 {
 p {
   color: #fff;
 }
+
+.center-align {
+  text-align: center;
+}
+
+.right-controls {
+  margin-top: 50px;
+}

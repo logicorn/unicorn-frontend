@@ -8,14 +8,12 @@ angular.module('unicorn')
         $scope.$apply ->
           $scope.connected = true
 
-    $scope.move = (trolleySpeed, bridgeSpeed) ->
-      supersonic.logger.log trolleySpeed, bridgeSpeed
-      crane.move(trolleySpeed, bridgeSpeed)
+    $scope.touch = ->
       return ->
-        crane.move(0, 0)
+        crane.setSpeed(0, 0)
 
     $scope.startCraneControl = (events) ->
-      events
+      stopCraneControl = events
         .filter((event) -> event.changedTouches?[0]?)
         .map((event) -> event.changedTouches[0])
         .map((touch) ->
@@ -37,8 +35,13 @@ angular.module('unicorn')
             y: drag.vector.y / drag.target.height
           drag
         )
-        .onValue (v) ->
-          console.log v
+        .map((drag) -> drag.magnitude)
+        .onValue (magnitudeVector) ->
+          crane.setSpeed (magnitudeVector.x * 255), (magnitudeVector.y * 255)
+      
+      ->
+        stopCraneControl?()
+        crane.resetSpeed()
 
 
     $scope.hertta = ->
@@ -60,7 +63,14 @@ angular.module('unicorn')
             resolve()
           socket.emit 'hello', { hello: true }
 
-      move: (trolleySpeed, bridgeSpeed) ->
+      resetSpeed: ->
+        socket.emit 'speed', {
+          a: 0
+          e: 0
+          h: 0
+        }
+
+      setSpeed: (trolleySpeed, bridgeSpeed) ->
         socket.emit 'speed', {
           a: 0
           e: trolleySpeed
@@ -86,7 +96,7 @@ angular.module('unicorn')
     link: (scope, element, attr) ->
       element.on 'touchstart', (event) ->
         events = new Bacon.Bus
-        scope.$eval attr.onDrag, { events }
+        onTouchEnd = scope.$eval attr.onDrag, { events }
 
         onTouchMove = (event) ->
           events.push event
@@ -94,4 +104,5 @@ angular.module('unicorn')
         element.one 'touchend', ->
           element.off 'touchmove', onTouchMove
           events.push new Bacon.End
+          onTouchEnd?()
   )

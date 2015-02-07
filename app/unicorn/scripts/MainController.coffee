@@ -22,15 +22,20 @@ angular.module('unicorn')
           coords: { x: touch.clientX, y: touch.clientY }
           target: { height: touch.target.clientHeight, width: touch.target.clientWidth }
         )
-        .slidingWindow(2,2)
-        .map(([first, second]) ->
+        .scan({ from: null, to: null, target: null }, (acc, {coords, target}) ->
           {
-            x: (second.coords.x/second.target.width - first.coords.x/first.target.width)
-            y: (second.coords.y/second.target.height - first.coords.y/first.target.width)
+            from: acc.from ? coords
+            target: acc.target ? target
+            to: coords
           }
-        ).scan({ x: 0, y: 0 }, ({x, y}, delta) ->
-          x: x + delta.x
-          y: y + delta.y
+        ).changes().map((drag) ->
+          drag.vector =
+            x: drag.to.x - drag.from.x
+            y: drag.to.y - drag.from.y
+          drag.magnitude =
+            x: drag.vector.x / drag.target.width
+            y: drag.vector.y / drag.target.height
+          drag
         )
         .onValue (v) ->
           console.log v

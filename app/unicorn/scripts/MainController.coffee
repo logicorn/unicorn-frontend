@@ -8,11 +8,11 @@ angular.module('unicorn')
         $scope.$apply ->
           $scope.connected = true
 
-    $scope.move = (speedX, speedY) ->
-      supersonic.logger.log speedX, speedY
-      crane.move(speedX, speedY)
+    $scope.move = (trolleySpeed, bridgeSpeed) ->
+      supersonic.logger.log trolleySpeed, bridgeSpeed
+      crane.move(trolleySpeed, bridgeSpeed)
       return ->
-        crane.stop()
+        crane.move(0, 0)
 
     $scope.hertta = ->
       supersonic.logger.log "pressing hertta"
@@ -33,17 +33,15 @@ angular.module('unicorn')
             resolve()
           socket.emit 'hello', { hello: true }
 
-      move: (speedX, speedY) ->
-        socket.emit 'move', {
-          x: speedX
-          y: speedY
+      move: (trolleySpeed, bridgeSpeed) ->
+        socket.emit 'speed', {
+          a: 0
+          e: trolleySpeed
+          h: bridgeSpeed
         }
 
       stop: ->
-        socket.emit 'move', {
-          x: 0
-          y: 0
-        }
+        socket.emit 'stop'
     }
   )
   .directive('onTouch', ->

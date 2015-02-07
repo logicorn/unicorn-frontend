@@ -45,11 +45,21 @@ angular.module('unicorn')
       return ->
         crane.setSpeed(0, 0)
 
-    $scope.startCraneControl = (events) ->
-      touchMoveEventsToContinuousDrag(events)
+    $scope.engageLeftControl = (events) ->
+      stopCraneControl = touchMoveEventsToContinuousDrag(events)
         .map((drag) -> drag.magnitude)
         .onValue (magnitudeVector) ->
-          crane.setSpeed (magnitudeVector.x * 255), (magnitudeVector.y * 255)
+          crane.setSpeed 0, (magnitudeVector.x * 255), (magnitudeVector.y * 255)
+      
+      ->
+        stopCraneControl?()
+        crane.resetSpeed()
+
+    $scope.engageRightControl = (events) ->
+      stopCraneControl = touchMoveEventsToContinuousDrag(events)
+        .map((drag) -> drag.magnitude)
+        .onValue (magnitudeVector) ->
+          crane.setSpeed (magnitudeVector.y * 255), 0, 0
       
       ->
         stopCraneControl?()
@@ -84,9 +94,9 @@ angular.module('unicorn')
 
       setSpeed: do ->
         curtail = (v) -> ~~Math.max(-255, Math.min(255, v))
-        (trolleySpeed, bridgeSpeed) ->
+        (hoistSpeed, trolleySpeed, bridgeSpeed) ->
           socket.emit 'speed', {
-            a: 0
+            a: curtail hoistSpeed
             e: curtail trolleySpeed
             h: curtail bridgeSpeed
           }

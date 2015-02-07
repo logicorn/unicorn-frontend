@@ -8,6 +8,7 @@ navigation-bar {
   color: #ffffff;
   padding-left: 6px;
   padding-right: 6px;
+  display: none;
 }
 
 navigation-bar title {

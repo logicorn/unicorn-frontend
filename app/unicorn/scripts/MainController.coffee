@@ -15,8 +15,25 @@ angular.module('unicorn')
         crane.move(0, 0)
 
     $scope.startCraneControl = (events) ->
-      events.onValue (v) ->
-        console.log v
+      events
+        .filter((event) -> event.changedTouches?[0]?)
+        .map((event) -> event.changedTouches[0])
+        .map((touch) ->
+          coords: { x: touch.clientX, y: touch.clientY }
+          target: { height: touch.target.clientHeight, width: touch.target.clientWidth }
+        )
+        .slidingWindow(2,2)
+        .map(([first, second]) ->
+          {
+            x: (second.coords.x/second.target.width - first.coords.x/first.target.width)
+            y: (second.coords.y/second.target.height - first.coords.y/first.target.width)
+          }
+        ).scan({ x: 0, y: 0 }, ({x, y}, delta) ->
+          x: x + delta.x
+          y: y + delta.y
+        )
+        .onValue (v) ->
+          console.log v
 
 
     $scope.hertta = ->

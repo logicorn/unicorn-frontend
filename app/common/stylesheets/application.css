@@ -1,13 +1,169 @@
+/** Webfonts **/
+@charset "UTF-8";
+
 @font-face {
   font-family: "kc-operator";
   src:url("/kc-operator/fonts/kc-operator.eot");
   src:url("/kc-operator/fonts/kc-operator.eot?#iefix") format("embedded-opentype"),
-  url("/kc-operator/fonts/kc-operator.woff") format("woff"),
-  url("/kc-operator/fonts/kc-operator.ttf") format("truetype"),
-  url("/kc-operator/fonts/kc-operator.svg#kc-operator") format("svg");
+    url("/kc-operator/fonts/kc-operator.woff") format("woff"),
+    url("/kc-operator/fonts/kc-operator.ttf") format("truetype"),
+    url("/kc-operator/fonts/kc-operator.svg#kc-operator") format("svg");
   font-weight: normal;
   font-style: normal;
+
 }
+
+[data-icon]:before {
+  font-family: "kc-operator" !important;
+  content: attr(data-icon);
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+[class^="icon-"]:before,
+[class*=" icon-"]:before {
+  font-family: "kc-operator" !important;
+  font-style: normal !important;
+  font-weight: normal !important;
+  font-variant: normal !important;
+  text-transform: none !important;
+  speak: none;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-align-justify:before {
+  content: "a";
+}
+.icon-angle-up:before {
+  content: "b";
+}
+.icon-angle-down:before {
+  content: "c";
+}
+.icon-chevron-down:before {
+  content: "d";
+}
+.icon-chevron-up:before {
+  content: "e";
+}
+.icon-remove:before {
+  content: "f";
+}
+.icon-signal:before {
+  content: "g";
+}
+.icon-star-two:before {
+  content: "h";
+}
+.icon-star:before {
+  content: "i";
+}
+.icon-operate:before {
+  content: "k";
+}
+.icon-target:before {
+  content: "m";
+}
+.icon-warning:before {
+  content: "o";
+}
+.icon-fault:before {
+  content: "p";
+}
+.icon-home:before {
+  content: "q";
+}
+.icon-power:before {
+  content: "r";
+}
+.icon-pos-trolley:before {
+  content: "y";
+}
+.icon-process-limit:before {
+  content: "z";
+}
+.icon-working-limit:before {
+  content: "A";
+}
+.icon-pos-hook:before {
+  content: "B";
+}
+.icon-pos-bridge:before {
+  content: "C";
+}
+.icon-add-limit:before {
+  content: "D";
+}
+.icon-new-limit:before {
+  content: "E";
+}
+.icon-taring:before {
+  content: "F";
+}
+.icon-load:before {
+  content: "G";
+}
+.icon-bypass-limit:before {
+  content: "H";
+}
+.icon-closing-limit:before {
+  content: "I";
+}
+.icon-load-multi:before {
+  content: "J";
+}
+.icon-limit-removed:before {
+  content: "L";
+}
+.icon-stop-limit:before {
+  content: "M";
+}
+.icon-operate-crane:before {
+  content: "N";
+}
+.icon-webkey:before {
+  content: "O";
+}
+.icon-hook-one:before {
+  content: "l";
+}
+.icon-hook-two:before {
+  content: "P";
+}
+.icon-slack-rope:before {
+  content: "W";
+}
+.icon-service:before {
+  content: "X";
+}
+.icon-sway-control:before {
+  content: "Z";
+}
+.icon-hook-main:before {
+  content: "0";
+}
+.icon-hook-aux:before {
+  content: "1";
+}
+.icon-microspeed:before {
+  content: "2";
+}
+.icon-inching:before {
+  content: "3";
+}
+.icon-hook-mono:before {
+  content: "4";
+}
+
+/** Colors **/
 
 body {
   background-color: #333;
@@ -33,70 +189,27 @@ p {
   color: #fff;
 }
 
-.logo {
-  position: absolute;
-  top: 500px;
-  left: 20px;
+/** Positioning */
+
+html, body, #unicorn-app {
+  height: 100%;
 }
 
-.left-control {
-  position: absolute;
-  top: 120px;
-  left: 20px;
-}
-
-.right-control {
-  position: absolute;
-  top: 120px;
-  right: 110px;
-}
-
-#left-controls {
+header, section#main {
   text-align: center;
 }
 
-#left-controls button {
-  margin: 10px 20px;
+#left-controls img {
+  margin-top: -15px;
 }
 
-#right-controls {
-  text-align: center;
-}
-
-#right-controls div {
-  margin-top: 20px;
+#unicorn-app header .icon {
+  font-size: 50px;
 }
 
 .button-round {
-  margin-top: -40px;
-  width:105px;
-  height:105px;
+  width:120px;
+  height:120px;
   border: 2px solid #f5f5f5;
   border-radius: 50%;
-}
-
-.list {
-  display: inline;
-  margin-left: 10px;
-}
-
-.KCicon {
-  font-family: "kc-operator";
-}
-
-select {
-  background-color: none;
-  height: 45px;
-}
-
-#swayControl {
-  position: absolute;
-  top: 440px;
-  right: 110px;
-}
-
-#swayControlSelect {
-  position: absolute;
-  top: 425px;
-  right: 30px;
 }

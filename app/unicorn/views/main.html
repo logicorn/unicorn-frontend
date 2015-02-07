@@ -1,110 +1,43 @@
-<div class="padding" ng-controller="MainController">
 
-  <super-navbar>
-    <super-navbar-title>
-    <!--  Konecranes <img src="/konecranes_logo.png"/>-->
-    </super-navbar-title>
-  </super-navbar>
+<super-navbar>
+  <super-navbar-title>
+  <!--  Konecranes <img src="/konecranes_logo.png"/>-->
+  </super-navbar-title>
+</super-navbar>
 
-  <div class="row">
-    <div class="col" id="left-controls">
-      <div>
-        <img class="left-control" src="/ohjainpylpyra5.png" on-drag="engageLeftControl(events)" />
-      </div>
-      <!--
-      <div>
-        <button class="button button-outline button-large button-stable super-arrow-up-b" on-touch="move(0, 100)"></button>
-      </div>
-      <div>
-        <button class="button button-outline button-large button-stable super-arrow-left-b" on-touch="move(-100, 0)"></button>
-        <button class="button button-outline button-large button-stable super-arrow-right-b" on-touch="move(100, 0)"></button>
-      </div>
-      <div>
-        <button class="button button-outline button-large button-stable super-arrow-down-b" on-touch="move(0, -100)"></button>
-      </div>-->
-      <div>
-        <img class="logo" src="/unicorn_logo2.png" />
-      </div>
-    </div>
+<div class="padding" ng-controller="MainController" id="unicorn-app">
 
+  <header class="row">
     <div class="col">
-      <div>
-        <!--<h2>Using now: Hertta</h2>-->
-        <img style="margin-top: -40px; margin-left: 40px;" src="/crane_view.jpg" on-touch="hertta()" />
-      </div>
-      <div style="margin-top: 20px; margin-left: 40px;">
-        <button class="button button-outline button-stable icon-left super-home">Home</button>
-        <button class="button button-outline button-stable icon-left super-arrow-shrink">Target 1</button>
-        <!--<button class="button button-stable icon-left super-arrow-shrink">Target 2</button>-->
-        <!--<button class="button button-stable icon-left super-arrow-shrink">Target 3</button>-->
-      </div>
-      <div style="margin-top: 20px; margin-left: 40px;">
-        <button class="button button-outline button-stable icon-left super-checkmark-round">Trolley 1</button>
-        <button class="button button-outline button-stable icon-left super-checkmark-round">Trolley 2</button>
-      </div>
-      <div style="margin-top: 20px; margin-left: 40px;">
-        <button class="button button-outline button-stable icon-left super-checkmark-round">Micro speed</button>
-        <div class="list">
-            <select>
-              <option>5%</option>
-              <option selected>10%</option>
-              <option>20%</option>
-              <option>30%</option>
-              <option>40%</option>
-            </select>
-        </div>
-        <button class="button button-outline button-stable icon-left super-checkmark-round">Inching</button>
-        <div class="list">
-          <select>
-            <option>10cm</option>
-            <option selected>20cm</option>
-            <option>30cm</option>
-            <option>40cm</option>
-            <option>50cm</option>
-          </select>
-        </div>
-      </div>
+      <h2 class="icon icon-operate"></h2>
+    </div>
+    <div class="col">
+      <h1>
+        <img class="logo" src="/unicorn_logo2.png" />
+      </h1>
+    </div>
+    <div class="col">
+      <h2 class="icon icon-hook-main"></h2>
+    </div>
+  </header>
+
+  <section id="main" class="row">
+    <div class="col col-center" id="left-controls">
+      <img class="left-control" src="/ohjainpylpyra5.png" on-drag="engageLeftControl(events)" />
     </div>
 
-    <div class="col center-align" id="right-controls">
+    <div class="col" id="center-panel">
       <div ng-if="!connected">
-        <button class="button button-round button-large button-assertive" ng-click="connect()">E-STOP</button>
+        <button class="button button-round button-large button-assertive" ng-click="connect()">Connect</button>
       </div>
       <div ng-if="connected">
         <button class="button button-round button-large button-assertive">E-STOP</button>
       </div>
-      <div>
-        <p class="KCicon">l<p>
-      <div>
-      <div>
-        <img class="right-control" src="/slaideri2.png" on-drag="engageRightControl(events)"/>
-      </div>
-      <!--
-      <div>
-        <button class="button button-outline button-large button-stable icon-left super-arrow-up-a"></button>
-      </div>
-      <div>
-        <button class="button button-outline  button-large button-stable icon-left super-arrow-down-a"></button>
-      </div>
-      <div>
-        <button class="button button-outline  button-large button-stable">Sway control</button>
-      </div>    -->
-      <div>
-        <button id="swayControl" class="button button-outline button-large button-stable">Sway control</button>
-        <div id="swayControlSelect" class="list">
-          <select>
-            <option>0m</option>
-            <option>0,3m</option>
-            <option>0,5m</option>
-            <option>0,9m</option>
-            <option selected>1,2m</option>
-            <option>1,5m</option>
-            <option>2,0m</option>
-            <option>2,5m</option>
-          </select>
-        </div>
-    </div>
     </div>
 
-  </div>
+    <div class="col col-center" id="right-controls">
+      <img class="right-control" src="/slaideri2.png" on-drag="engageRightControl(events)"/>
+    </div>
+  </section>
+
 </div>

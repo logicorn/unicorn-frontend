@@ -22,10 +22,11 @@ p {
   color: #fff;
 }
 
-.center-align {
+
+#right-controls {
   text-align: center;
 }
 
-.right-controls {
+#right-controls button {
   margin-top: 50px;
 }

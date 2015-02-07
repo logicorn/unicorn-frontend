@@ -26,6 +26,10 @@ p {
   text-align: center;
 }
 
+#left-controls button {
+  margin: 10px 20px;
+}
+
 #right-controls {
   text-align: center;
 }

@@ -1,3 +1,36 @@
+###
+(events: Stream touchMoveEvent) -> Stream {
+  from: { x, y }
+  to: { x, y }
+  target: { width, height }
+  vector: { x, y }
+  magnitude: { x, y }
+}
+###
+touchMoveEventsToContinuousDrag = (events) ->
+  events
+    .filter((event) -> event.changedTouches?[0]?)
+    .map((event) -> event.changedTouches[0])
+    .map((touch) ->
+      coords: { x: touch.clientX, y: touch.clientY }
+      target: { height: touch.target.clientHeight, width: touch.target.clientWidth }
+    )
+    .scan({ from: null, to: null, target: null }, (acc, {coords, target}) ->
+      {
+        from: acc.from ? coords
+        target: acc.target ? target
+        to: coords
+      }
+    ).changes().map((drag) ->
+      drag.vector =
+        x: drag.to.x - drag.from.x
+        y: drag.to.y - drag.from.y
+      drag.magnitude =
+        x: drag.vector.x / drag.target.width
+        y: drag.vector.y / drag.target.height
+      drag
+    )
+
 angular.module('unicorn')
   .controller('MainController', ($scope, crane) ->
     $scope.connected = false
@@ -13,28 +46,7 @@ angular.module('unicorn')
         crane.setSpeed(0, 0)
 
     $scope.startCraneControl = (events) ->
-      stopCraneControl = events
-        .filter((event) -> event.changedTouches?[0]?)
-        .map((event) -> event.changedTouches[0])
-        .map((touch) ->
-          coords: { x: touch.clientX, y: touch.clientY }
-          target: { height: touch.target.clientHeight, width: touch.target.clientWidth }
-        )
-        .scan({ from: null, to: null, target: null }, (acc, {coords, target}) ->
-          {
-            from: acc.from ? coords
-            target: acc.target ? target
-            to: coords
-          }
-        ).changes().map((drag) ->
-          drag.vector =
-            x: drag.to.x - drag.from.x
-            y: drag.to.y - drag.from.y
-          drag.magnitude =
-            x: drag.vector.x / drag.target.width
-            y: drag.vector.y / drag.target.height
-          drag
-        )
+      touchMoveEventsToContinuousDrag(events)
         .map((drag) -> drag.magnitude)
         .onValue (magnitudeVector) ->
           crane.setSpeed (magnitudeVector.x * 255), (magnitudeVector.y * 255)

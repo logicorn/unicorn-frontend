@@ -14,6 +14,11 @@ angular.module('unicorn')
       return ->
         crane.move(0, 0)
 
+    $scope.startCraneControl = (events) ->
+      events.onValue (v) ->
+        console.log v
+
+
     $scope.hertta = ->
       supersonic.logger.log "pressing hertta"
       return ->
@@ -53,4 +58,18 @@ angular.module('unicorn')
           onTouchEnd?()
         scope.$apply ->
           onTouchEnd = scope.$eval attr.onTouch
+  )
+  .directive('onDrag', ->
+    restrict: 'A'
+    link: (scope, element, attr) ->
+      element.on 'touchstart', (event) ->
+        events = new Bacon.Bus
+        scope.$eval attr.onDrag, { events }
+
+        onTouchMove = (event) ->
+          events.push event
+        element.on 'touchmove', onTouchMove
+        element.one 'touchend', ->
+          element.off 'touchmove', onTouchMove
+          events.push new Bacon.End
   )

@@ -33,6 +33,12 @@ p {
   color: #fff;
 }
 
+.logo {
+  position: absolute;
+  top: 500px;
+  left: 20px;
+}
+
 .left-control {
   position: absolute;
   top: 120px;

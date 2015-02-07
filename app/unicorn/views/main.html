@@ -2,13 +2,16 @@
 
   <super-navbar>
     <super-navbar-title>
-      Konecranes <img src="/konecranes_logo.png"/>
+    <!--  Konecranes <img src="/konecranes_logo.png"/>-->
     </super-navbar-title>
   </super-navbar>
 
   <div class="row">
-
     <div class="col" id="left-controls">
+      <div>
+        <img class="left-control" src="/ohjainpylpyra4.png" on-touch=""/>
+      </div>
+      <!--
       <div>
         <button class="button button-outline button-large button-stable super-arrow-up-b" on-touch="move(0, 1)"></button>
       </div>
@@ -18,29 +21,62 @@
       </div>
       <div>
         <button class="button button-outline button-large button-stable super-arrow-down-b" on-touch="move(0, -1)"></button>
-      </div>
+      </div>-->
     </div>
 
     <div class="col">
       <div>
-        <h2>Using now: Hertta</h2>
-        <img src="/crane_view.jpg" on-touch="hertta()" />
+        <!--<h2>Using now: Hertta</h2>-->
+        <img style="margin-top: -40px; margin-left: 40px;" src="/crane_view.jpg" on-touch="hertta()" />
       </div>
-      <div>
-        <button class="button button-stable icon-left super-home">Home</button>
-        <button class="button button-stable icon-left super-arrow-shrink">Target 1</button>
-        <button class="button button-stable icon-left super-arrow-shrink">Target 2</button>
-        <button class="button button-stable icon-left super-arrow-shrink">Target 3</button>
+      <div style="margin-top: 20px; margin-left: 40px;">
+        <button class="button button-outline button-stable icon-left super-home">Home</button>
+        <button class="button button-outline button-stable icon-left super-arrow-shrink">Target 1</button>
+        <!--<button class="button button-stable icon-left super-arrow-shrink">Target 2</button>-->
+        <!--<button class="button button-stable icon-left super-arrow-shrink">Target 3</button>-->
+      </div>
+      <div style="margin-top: 20px; margin-left: 40px;">
+        <button class="button button-outline button-stable icon-left super-checkmark-round">Trolley 1</button>
+        <button class="button button-outline button-stable icon-left super-checkmark-round">Trolley 2</button>
+      </div>
+      <div style="margin-top: 20px; margin-left: 40px;">
+        <button class="button button-outline button-stable icon-left super-checkmark-round">Micro speed</button>
+        <div class="list">
+            <select>
+              <option>5%</option>
+              <option selected>10%</option>
+              <option>20%</option>
+              <option>30%</option>
+              <option>40%</option>
+            </select>
+        </div>
+        <button class="button button-outline button-stable icon-left super-checkmark-round">Inching</button>
+        <div class="list">
+          <select>
+            <option>10cm</option>
+            <option selected>20cm</option>
+            <option>30cm</option>
+            <option>40cm</option>
+            <option>50cm</option>
+          </select>
+        </div>
       </div>
     </div>
 
     <div class="col center-align" id="right-controls">
       <div ng-if="!connected">
-        <button class="button button-large button-assertive" ng-click="connect()">Connect</button>
+        <button class="button button-round button-large button-assertive" ng-click="connect()">E-STOP</button>
       </div>
       <div ng-if="connected">
-        <button class="button button-large button-assertive">E-STOP</button>
+        <button class="button button-round button-large button-assertive">E-STOP</button>
       </div>
+      <div>
+        <p class="KCicon">l<p>
+      <div>
+      <div>
+        <img class="right-control" src="/slaideri.png" on-touch=""/>
+      </div>
+      <!--
       <div>
         <button class="button button-outline button-large button-stable icon-left super-arrow-up-a"></button>
       </div>
@@ -49,7 +85,22 @@
       </div>
       <div>
         <button class="button button-outline  button-large button-stable">Sway control</button>
-      </div>
+      </div>    -->
+      <div>
+        <button id="swayControl" class="button button-outline button-large button-stable">Sway control</button>
+        <div id="swayControlSelect" class="list">
+          <select>
+            <option>0m</option>
+            <option>0,3m</option>
+            <option>0,5m</option>
+            <option>0,9m</option>
+            <option selected>1,2m</option>
+            <option>1,5m</option>
+            <option>2,0m</option>
+            <option>2,5m</option>
+          </select>
+        </div>
+    </div>
     </div>
 
   </div>

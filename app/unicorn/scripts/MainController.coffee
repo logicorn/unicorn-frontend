@@ -70,12 +70,14 @@ angular.module('unicorn')
           h: 0
         }
 
-      setSpeed: (trolleySpeed, bridgeSpeed) ->
-        socket.emit 'speed', {
-          a: 0
-          e: trolleySpeed
-          h: bridgeSpeed
-        }
+      setSpeed: do ->
+        curtail = (v) -> ~~Math.max(-255, Math.min(255, v))
+        (trolleySpeed, bridgeSpeed) ->
+          socket.emit 'speed', {
+            a: 0
+            e: curtail trolleySpeed
+            h: curtail bridgeSpeed
+          }
 
       stop: ->
         socket.emit 'stop'

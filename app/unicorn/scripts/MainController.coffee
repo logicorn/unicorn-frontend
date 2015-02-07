@@ -2,6 +2,7 @@ angular.module('unicorn')
   .controller('MainController', ($scope, crane) ->
     $scope.connected = false
     $scope.connect = ->
+      supersonic.device.vibrate()
       crane.connect().then ->
         supersonic.device.vibrate()
         $scope.$apply ->
@@ -14,14 +15,17 @@ angular.module('unicorn')
 
   )
   .service('crane', ->
-    backend = "62.176.37.10"
-    socket = io.connect("http://#{backend}:9001")
-    
+    backend = "192.168.240.86"
+    socket = io("http://#{backend}:80")
+
     {
       connect: ->
         new Promise (resolve) ->
-          socket.on 'connected', resolve
-          socket.emit 'connect'
+          supersonic.logger.log "connecting..."
+          socket.on 'connected', (data) ->
+            supersonic.logger.log "Successful handshake!"
+            resolve()
+          socket.emit 'hello', { hello: true }
     }
   )
   .directive('onTouch', ->

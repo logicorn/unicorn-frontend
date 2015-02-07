@@ -8,6 +8,12 @@ angular.module('unicorn')
         $scope.$apply ->
           $scope.connected = true
 
+    $scope.move = (speedX, speedY) ->
+      supersonic.logger.log speedX, speedY
+      crane.move(speedX, speedY)
+      return ->
+        crane.stop()
+
     $scope.hertta = ->
       supersonic.logger.log "pressing hertta"
       return ->
@@ -26,6 +32,18 @@ angular.module('unicorn')
             supersonic.logger.log "Successful handshake!"
             resolve()
           socket.emit 'hello', { hello: true }
+
+      move: (speedX, speedY) ->
+        socket.emit 'move', {
+          x: speedX
+          y: speedY
+        }
+
+      stop: ->
+        socket.emit 'move', {
+          x: 0
+          y: 0
+        }
     }
   )
   .directive('onTouch', ->

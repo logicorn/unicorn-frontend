@@ -1,6 +1,6 @@
 
 
-<div class="padding" ng-controller="MainController" id="unicorn-app">
+<div ng-controller="MainController" id="unicorn-app">
 
   <header class="row">
     <div class="col">
@@ -8,7 +8,7 @@
     </div>
     <div class="col">
       <h1>
-        <img class="logo" src="/unicorn_logo2.png" />
+        <img class="logoLargeScreen resize" src="/unicorn_logo2.png" />
       </h1>
     </div>
     <div class="col">
@@ -18,20 +18,23 @@
 
   <section id="main" class="row">
     <div class="col col-center" id="left-controls">
-      <img class="left-control" src="/ohjainpylpyra5.png" on-drag="engageLeftControl(events)" />
+      <img class="left-control resizeLeft" src="/ohjainpylpyra5.png" on-drag="engageLeftControl(events)" />
     </div>
 
     <div class="col" id="center-panel">
+      <h1>
+        <img class="logoSmallScreen resize" src="/unicorn_logo2.png" />
+      </h1>
       <div ng-if="!connected">
-        <button class="button button-round button-large button-assertive" ng-click="connect()">CONNECT</button>
+        <button class="button button-round button-large button-assertive button-responsive" ng-click="connect()">CONNECT</button>
       </div>
       <div ng-if="connected">
-        <button class="button button-round button-large button-assertive">E-STOP</button>
+        <button class="button button-round button-large button-assertive button-responsive">E-STOP</button>
       </div>
     </div>
 
     <div class="col col-center" id="right-controls">
-      <img class="right-control" src="/slaideri2.png" on-drag="engageRightControl(events)"/>
+      <img class="right-control resizeRight" src="/slaideri2.png" on-drag="engageRightControl(events)"/>
     </div>
   </section>
 

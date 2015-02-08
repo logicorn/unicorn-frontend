@@ -97,6 +97,8 @@ angular.module('unicorn')
       setSpeed: do ->
         curtail = (v) -> ~~Math.max(-255, Math.min(255, v))
         (hoistSpeed, trolleySpeed, bridgeSpeed) ->
+          # Flip bridge axis direction
+          bridgeSpeed = -bridgeSpeed
           socket.emit 'speed', {
             a: curtail hoistSpeed
             e: curtail trolleySpeed

@@ -78,34 +78,38 @@ angular.module('unicorn')
         stopCraneControl?()
         crane.resetSpeed()
 
-
-    lockOrientation = new Bacon.Bus
-    $scope.$watch 'lockOrientation', (locked) ->
-      lockOrientation.push locked
-
-    lockOrientation
-      .flatMapLatest((locked) ->
-        if !locked
-          Bacon.once 0
-        else
-          supersonic.device.compass.watchHeading()
-            .scan({ startHeading: null, currentHeading: null }, (acc, heading) ->
-              {
-                startHeading: acc.startHeading ? heading.magneticHeading
-                currentHeading: heading.magneticHeading
-              }
-            )
-            .changes()
-            .map((correction) ->
-              supersonic.logger.log correction
-              correction.currentHeading - correction.startHeading
-            )
-      )
-      .delay(0)
-      .onValue (rotation) ->
-        supersonic.logger.log "applying rotation #{rotation}"
+    supersonic.device.platform()
+      .then (platform) ->
+        (platform.name is 'iOS')
+      .then (allowOrientationLock) ->
         $scope.$apply ->
-          $scope.rotation = rotation
+          $scope.allowOrientationLock = allowOrientationLock
+        
+        lockOrientation = new Bacon.Bus
+        $scope.$watch 'lockOrientation', (locked) ->
+          lockOrientation.push !!locked
+
+        lockOrientation
+          .flatMapLatest((locked) ->
+            if !locked
+              Bacon.once 0
+            else
+              supersonic.device.compass.watchHeading()
+                .scan({ startHeading: null, currentHeading: null }, (acc, heading) ->
+                  {
+                    startHeading: acc.startHeading ? heading.magneticHeading
+                    currentHeading: heading.magneticHeading
+                  }
+                )
+                .changes()
+                .map((correction) ->
+                  correction.currentHeading - correction.startHeading
+                )
+          )
+          .delay(0)
+          .onValue (rotation) ->
+            $scope.$apply ->
+              $scope.rotation = rotation
 
   )
   .service('crane', ->

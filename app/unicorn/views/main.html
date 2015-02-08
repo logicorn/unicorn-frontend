@@ -18,7 +18,12 @@
 
   <section id="main" class="row">
     <div class="col col-center" id="left-controls">
-      <img class="left-control resizeLeft" src="/ohjainpylpyra5.png" on-drag="engageLeftControl(events)" />
+      <img
+        class="left-control resizeLeft"
+        src="/ohjainpylpyra4.png"
+        on-drag="engageLeftControl(events)" 
+        ng-style="{ '-webkit-transform': 'rotate(' + (-rotation) + 'deg)' }"
+        />
     </div>
 
     <div class="col col-center" id="center-panel">

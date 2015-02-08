@@ -1,3 +1,6 @@
+BACKEND_IP = "192.168.240.86"
+Bacon = supersonic.internal.Bacon
+
 ###
 (events: Stream touchMoveEvent) -> Stream {
   from: { x, y }
@@ -73,8 +76,7 @@ angular.module('unicorn')
 
   )
   .service('crane', ->
-    backend = "192.168.240.86"
-    socket = io("http://#{backend}:80")
+    socket = io("http://#{BACKEND_IP}:80")
 
     {
       connect: ->

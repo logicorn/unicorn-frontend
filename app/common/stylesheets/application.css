@@ -191,12 +191,16 @@ p {
 
 /** Positioning **/
 
-html, body, #unicorn-app {
+html, body, #unicorn-app, #main {
   height: 100%;
 }
 
 header, section#main {
   text-align: center;
+}
+
+#main {
+  margin-top: -100px;
 }
 
 #left-controls img {
@@ -213,12 +217,20 @@ header, section#main {
   border: 2px solid #f5f5f5;
   border-radius: 50%;
   font-weight: bold;
-  font-size: 18px;
+  font-size: 16px;
+}
+
+p.marginTop {
+  margin-top: 50px;
 }
 
 /** Media queries */
 
-@media (max-width: 768px) {
+@media (max-width: 800px) {
+  #main {
+    margin-top: -30px;
+  }
+
   .icon {
     display: none;
   }
@@ -251,8 +263,23 @@ header, section#main {
   }
 }
 
-@media (min-device-width: 768px) {
+@media (min-device-width: 800px) {
   .logoSmallScreen {
     display: none
+  }
+}
+
+@media (max-device-width: 800px) {
+  .icon {
+    display: none;
+  }
+
+  .logoLargeScreen {
+    display: none
+  }
+
+  .logoSmallScreen {
+    width: 90%;
+    height: auto;
   }
 }

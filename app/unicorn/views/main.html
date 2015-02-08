@@ -31,6 +31,7 @@
       <div ng-if="connected">
         <button class="button button-round button-large button-assertive button-responsive">E-STOP</button>
       </div>
+      <div ng-show="allowOrientationLock">
         <p class="marginTop">ORIENTATION LOCK</p>
         <label class="toggle toggle-assertive">
            <input type="checkbox" ng-model="lockOrientation">
@@ -38,6 +39,7 @@
              <div class="handle"></div>
            </div>
         </label>
+      </div>
     </div>
 
     <div class="col col-center" id="right-controls">

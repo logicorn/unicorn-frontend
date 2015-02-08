@@ -37,6 +37,9 @@ touchMoveEventsToContinuousDrag = (events) ->
 angular.module('unicorn')
   .controller('MainController', ($scope, crane) ->
     $scope.connected = false
+    $scope.lockOrientation = null
+    $scope.rotation = 0
+
     $scope.connect = ->
       supersonic.device.vibrate()
       crane.connect().then ->
@@ -52,7 +55,14 @@ angular.module('unicorn')
       stopCraneControl = touchMoveEventsToContinuousDrag(events)
         .map((drag) -> drag.magnitude)
         .onValue (magnitudeVector) ->
-          crane.setSpeed 0, (magnitudeVector.x * 255), (magnitudeVector.y * 255)
+          rotation = ($scope.rotation / 180) * Math.PI
+          x = (magnitudeVector.x * 255)
+          y = (magnitudeVector.y * 255)
+          correctedX = (x * Math.cos rotation) - (y * Math.sin rotation)
+          correctedY = (x * Math.sin rotation) + (y * Math.cos rotation)
+          $scope.correctedX = correctedX
+          $scope.correctedY = correctedY
+          crane.setSpeed 0, correctedX, correctedY
       
       ->
         stopCraneControl?()
@@ -69,10 +79,33 @@ angular.module('unicorn')
         crane.resetSpeed()
 
 
-    $scope.hertta = ->
-      supersonic.logger.log "pressing hertta"
-      return ->
-        supersonic.logger.log "stopped"
+    lockOrientation = new Bacon.Bus
+    $scope.$watch 'lockOrientation', (locked) ->
+      lockOrientation.push locked
+
+    lockOrientation
+      .flatMapLatest((locked) ->
+        if !locked
+          Bacon.once 0
+        else
+          supersonic.device.compass.watchHeading()
+            .scan({ startHeading: null, currentHeading: null }, (acc, heading) ->
+              {
+                startHeading: acc.startHeading ? heading.magneticHeading
+                currentHeading: heading.magneticHeading
+              }
+            )
+            .changes()
+            .map((correction) ->
+              supersonic.logger.log correction
+              correction.currentHeading - correction.startHeading
+            )
+      )
+      .delay(0)
+      .onValue (rotation) ->
+        supersonic.logger.log "applying rotation #{rotation}"
+        $scope.$apply ->
+          $scope.rotation = rotation
 
   )
   .service('crane', ->
